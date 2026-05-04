@@ -1,0 +1,12 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: sport-shop
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sport_shop_db
+    username: postgres
+    password: daria
+    driver-class-name: org.postgresql.Driver

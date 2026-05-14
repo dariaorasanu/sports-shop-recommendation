@@ -243,10 +243,10 @@ BEGIN
         adresa_livrare
     )
     VALUES (
-        p_id_utilizator,
-        'NOUA',
-        v_pret * p_cantitate,
-        p_adresa_livrare
+               p_id_utilizator,
+               'NOUA',
+               0,
+               p_adresa_livrare
     )
     RETURNING id_comanda INTO v_id_comanda;
 

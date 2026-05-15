@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { getSports } from "../api/api";
+import "./SportsPage.css";
+
 
 function SportsPage() {
     const [sports, setSports] = useState([]);
@@ -20,26 +22,47 @@ function SportsPage() {
     }, []);
 
     if (loading) {
-        return <p>Se încarcă sporturile...</p>;
+        return <p className="message">Se încarcă sporturile...</p>;
     }
 
     if (errorMessage) {
-        return <p>{errorMessage}</p>;
+        return <p className="message error">{errorMessage}</p>;
     }
 
     return (
-        <div>
-            <h1>Sporturi disponibile</h1>
+        <div className="sports-page">
+            <header className="sports-header">
+                <h1>Sporturi disponibile</h1>
+                <p>
+                    Aici poți vedea sporturile existente în aplicație, împreună cu
+                    detaliile lor principale.
+                </p>
+            </header>
 
-            {sports.map((sport) => (
-                <div key={sport.idSport || sport.id}>                    <h2>{sport.denumire}</h2>
-                    <p>Mediu: {sport.mediu}</p>
-                    <p>Tip activitate: {sport.tipActivitate}</p>
-                    <p>Nivel efort: {sport.nivelEfort}</p>
-                    <p>Obiectiv: {sport.obiectivPrincipal}</p>
-                    <p>{sport.descriere}</p>
-                </div>
-            ))}
+            <div className="sports-grid">
+                {sports.map((sport) => (
+                    <div className="sport-card" key={sport.idSport}>
+                        <h2>{sport.denumire}</h2>
+
+                        <div className="sport-details">
+                            <p>
+                                <strong>Mediu:</strong> {sport.mediu}
+                            </p>
+                            <p>
+                                <strong>Tip activitate:</strong> {sport.tipActivitate}
+                            </p>
+                            <p>
+                                <strong>Nivel efort:</strong> {sport.nivelEfort}
+                            </p>
+                            <p>
+                                <strong>Obiectiv:</strong> {sport.obiectivPrincipal}
+                            </p>
+                        </div>
+
+                        <p className="sport-description">{sport.descriere}</p>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }

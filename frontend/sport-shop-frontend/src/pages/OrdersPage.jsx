@@ -15,7 +15,7 @@ function OrdersPage({ selectedUserId }) {
 
         return new Date(dateValue).toLocaleString("ro-RO");
     }
-    useEffect(() => {
+    function loadOrders() {
         if (!selectedUserId) {
             return;
         }
@@ -30,6 +30,9 @@ function OrdersPage({ selectedUserId }) {
             .finally(() => {
                 setLoading(false);
             });
+    }
+    useEffect(() => {
+        loadOrders();
     }, [selectedUserId]);
 
     if (loading) {
@@ -47,6 +50,13 @@ function OrdersPage({ selectedUserId }) {
                 <p>
                     Aici poți vedea comenzile plasate pentru utilizatorul curent.
                 </p>
+                <button
+                    type="button"
+                    className="refresh-orders-button"
+                    onClick={loadOrders}
+                >
+                    Actualizează comenzile
+                </button>
             </header>
 
             {orders.length === 0 ? (
@@ -75,7 +85,8 @@ function OrdersPage({ selectedUserId }) {
                             </p>
 
                             <p>
-                                <strong>Status:</strong> {order.status}
+                                <strong>Status:</strong>{" "}
+                                <span className="status-badge">{order.status}</span>
                             </p>
 
                             <p>

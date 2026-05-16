@@ -58,3 +58,37 @@
 .questionnaire-form button:hover {
     background: #111827;
 }
+.form-error {
+    margin-top: 20px;
+    color: darkred;
+    font-weight: 600;
+}
+
+.recommendations-section {
+    margin-top: 36px;
+}
+
+.recommendations-section h2 {
+    margin-bottom: 20px;
+}
+
+.recommendations-list {
+    display: grid;
+    gap: 16px;
+}
+
+.recommendation-card {
+    padding: 18px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #f9fafb;
+}
+
+.recommendation-card h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.recommendation-card p {
+    margin: 6px 0;
+}

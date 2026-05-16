@@ -1,11 +1,12 @@
 import { useState } from "react";
+import { createQuestionnaire } from "../api/api";
 import "./QuestionnairePage.css";
 
 function QuestionnairePage() {
     const [formData, setFormData] = useState({
         idUtilizator: 1,
         timpLiberOre: 5,
-        nivelActivitate: "INCEPATOR",
+        nivelActivitate: "SEDENTAR",
         obiectiv: "RELAXARE",
         restrictiiMedicale: "NU",
         bugetEstimat: 300,
@@ -13,6 +14,10 @@ function QuestionnairePage() {
         preferintaMediu: "INTERIOR",
         tolerantaEfort: 2,
     });
+
+    const [recommendations, setRecommendations] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     function handleChange(event) {
         const { name, value } = event.target;
@@ -23,11 +28,29 @@ function QuestionnairePage() {
         });
     }
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
 
-        console.log("Date formular:", formData);
-        alert("Formularul funcționează. Urmează să îl conectăm la backend.");
+        setLoading(true);
+        setErrorMessage("");
+        setRecommendations([]);
+
+        const questionnaireData = {
+            ...formData,
+            idUtilizator: Number(formData.idUtilizator),
+            timpLiberOre: Number(formData.timpLiberOre),
+            bugetEstimat: Number(formData.bugetEstimat),
+            tolerantaEfort: Number(formData.tolerantaEfort),
+        };
+
+        try {
+            const data = await createQuestionnaire(questionnaireData);
+            setRecommendations(data);
+        } catch (error) {
+            setErrorMessage(error.message);
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
@@ -67,7 +90,7 @@ function QuestionnairePage() {
                             value={formData.nivelActivitate}
                             onChange={handleChange}
                         >
-                            <option value="INCEPATOR">Începător</option>
+                            <option value="SEDENTAR">Sedentar</option>
                             <option value="INTERMEDIAR">Intermediar</option>
                             <option value="AVANSAT">Avansat</option>
                         </select>
@@ -82,8 +105,9 @@ function QuestionnairePage() {
                         >
                             <option value="RELAXARE">Relaxare</option>
                             <option value="SLABIRE">Slăbire</option>
-                            <option value="MASA_MUSCULARA">Masă musculară</option>
+                            <option value="TONIFIERE">Tonifiere</option>
                             <option value="REZISTENTA">Rezistență</option>
+                            <option value="COMPETITIE">Competiție</option>
                             <option value="SOCIALIZARE">Socializare</option>
                         </select>
                     </label>
@@ -146,8 +170,44 @@ function QuestionnairePage() {
                         />
                     </label>
 
-                    <button type="submit">Generează recomandări</button>
+                    <button type="submit" disabled={loading}>
+                        {loading ? "Se generează..." : "Generează recomandări"}
+                    </button>
                 </form>
+
+                {errorMessage && <p className="form-error">{errorMessage}</p>}
+
+                {recommendations.length > 0 && (
+                    <div className="recommendations-section">
+                        <h2>Recomandări generate</h2>
+
+                        <div className="recommendations-list">
+                            {recommendations.map((recommendation) => (
+                                <div
+                                    className="recommendation-card"
+                                    key={recommendation.idRecomandare}
+                                >
+                                    <h3>{recommendation.sportRecomandat}</h3>
+                                    <p>
+                                        <strong>Scor compatibilitate:</strong>{" "}
+                                        {recommendation.scorCompatibilitate}
+                                    </p>
+                                    <p>
+                                        <strong>Nivel recomandat:</strong>{" "}
+                                        {recommendation.nivelRecomandat}
+                                    </p>
+                                    <p>
+                                        <strong>Mediu:</strong> {recommendation.mediu}
+                                    </p>
+                                    <p>
+                                        <strong>Tip activitate:</strong>{" "}
+                                        {recommendation.tipActivitate}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

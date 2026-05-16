@@ -50,13 +50,7 @@ function OrdersPage({ selectedUserId }) {
                 <p>
                     Aici poți vedea comenzile plasate pentru utilizatorul curent.
                 </p>
-                <button
-                    type="button"
-                    className="refresh-orders-button"
-                    onClick={loadOrders}
-                >
-                    Actualizează comenzile
-                </button>
+
             </header>
 
             {orders.length === 0 ? (

@@ -116,3 +116,19 @@ export async function loginUser(loginData) {
 
     return response.json();
 }
+export async function getRecommendationsByUser(userId) {
+    const response = await fetch(`${BASE_URL}/recommendations/user/${userId}`);
+
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+
+        console.log("Backend error:", errorData);
+
+        throw new Error(
+            errorData?.message ||
+            "Nu s-au putut încărca recomandările utilizatorului."
+        );
+    }
+
+    return response.json();
+}

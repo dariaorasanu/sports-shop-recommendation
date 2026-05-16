@@ -3,6 +3,7 @@ import SportsPage from "./pages/SportsPage";
 import QuestionnairePage from "./pages/QuestionnairePage";
 import OrdersPage from "./pages/OrdersPage";
 import AuthPage from "./pages/AuthPage";
+import MyRecommendationsPage from "./pages/MyRecommendationsPage";
 import "./App.css";
 
 function App() {
@@ -72,6 +73,13 @@ function App() {
                         </button>
 
                         <button
+                            className={currentPage === "myRecommendations" ? "active" : ""}
+                            onClick={() => setCurrentPage("myRecommendations")}
+                        >
+                            Recomandările mele
+                        </button>
+
+                        <button
                             className={currentPage === "orders" ? "active" : ""}
                             onClick={() => setCurrentPage("orders")}
                         >
@@ -97,6 +105,9 @@ function App() {
 
             {currentPage === "orders" && (
                 <OrdersPage selectedUserId={loggedUser.idUtilizator} />
+            )}
+            {currentPage === "myRecommendations" && (
+                <MyRecommendationsPage selectedUserId={loggedUser.idUtilizator} />
             )}
         </div>
     );

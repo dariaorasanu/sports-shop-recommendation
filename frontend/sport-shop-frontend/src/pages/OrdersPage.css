@@ -1,0 +1,61 @@
+.orders-page {
+    min-height: calc(100vh - 88px);
+    padding: 44px;
+    background: #ecfdf5;
+    color: #1f2937;
+}
+
+.orders-header {
+    max-width: 900px;
+    margin: 0 auto 36px;
+    text-align: center;
+}
+
+.orders-header h1 {
+    margin-bottom: 12px;
+    font-size: 38px;
+    color: #0f766e;
+}
+
+.orders-header p {
+    color: #4b5563;
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+.orders-list {
+    display: grid;
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.order-card,
+.empty-orders-card {
+    background: white;
+    border: 1px solid #ccfbf1;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 10px 24px rgba(15, 118, 110, 0.09);
+}
+
+.order-card h2,
+.empty-orders-card h2 {
+    margin-top: 0;
+    color: #0f766e;
+}
+
+.order-card p,
+.empty-orders-card p {
+    margin: 8px 0;
+}
+
+.orders-message {
+    padding: 40px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.error {
+    color: darkred;
+}

@@ -2,6 +2,7 @@ import { useState } from "react";
 import SportsPage from "./pages/SportsPage";
 import QuestionnairePage from "./pages/QuestionnairePage";
 import "./App.css";
+import OrdersPage from "./pages/OrdersPage";
 
 function App() {
     const [currentPage, setCurrentPage] = useState("questionnaire");
@@ -28,11 +29,19 @@ function App() {
                     >
                         Chestionar
                     </button>
+
+                    <button
+                        className={currentPage === "orders" ? "active" : ""}
+                        onClick={() => setCurrentPage("orders")}
+                    >
+                        Comenzile mele
+                    </button>
                 </div>
             </nav>
 
             {currentPage === "sports" && <SportsPage />}
             {currentPage === "questionnaire" && <QuestionnairePage />}
+            {currentPage === "orders" && <OrdersPage />}{currentPage === "orders" && <OrdersPage />}
         </div>
     );
 }

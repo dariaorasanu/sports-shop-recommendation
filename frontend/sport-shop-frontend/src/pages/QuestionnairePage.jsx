@@ -4,6 +4,7 @@ import {
     getProductsBySport,
     placeOrder,
 } from "../api/api";
+import "./QuestionnairePage.css";
 
 function QuestionnairePage() {
     const [formData, setFormData] = useState({
@@ -142,8 +143,8 @@ function QuestionnairePage() {
                             onChange={handleChange}
                         >
                             <option value="SEDENTAR">Sedentar</option>
-                            <option value="INTERMEDIAR">Intermediar</option>
-                            <option value="AVANSAT">Avansat</option>
+                            <option value="MODERAT">Moderat</option>
+                            <option value="ACTIV">Activ</option>
                         </select>
                     </label>
 

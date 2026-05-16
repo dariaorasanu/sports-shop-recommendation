@@ -7,9 +7,12 @@ function App() {
     const [currentPage, setCurrentPage] = useState("questionnaire");
 
     return (
-        <div>
+        <div className="app">
             <nav className="navbar">
-                <h2>Sports Recommendation App</h2>
+                <div className="brand">
+                    <h1>SportMatch</h1>
+                    <p>Găsește-ți sportul care ți se potrivește!</p>
+                </div>
 
                 <div className="nav-buttons">
                     <button

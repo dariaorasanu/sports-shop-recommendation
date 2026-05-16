@@ -1,27 +1,31 @@
 .questionnaire-page {
-    min-height: 100vh;
-    padding: 40px;
-    background: #f4f6f8;
-    color: #222;
+    min-height: calc(100vh - 88px);
+    padding: 44px;
+    background: #ecfdf5;
+    color: #1f2937;
 }
 
 .questionnaire-card {
-    max-width: 760px;
+    max-width: 780px;
     margin: 0 auto;
     background: white;
-    border-radius: 16px;
-    padding: 32px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    border: 1px solid #ccfbf1;
+    border-radius: 22px;
+    padding: 34px;
+    box-shadow: 0 12px 28px rgba(15, 118, 110, 0.12);
 }
 
 .questionnaire-card h1 {
     margin-top: 0;
     margin-bottom: 12px;
+    color: #0f766e;
+    font-size: 34px;
 }
 
 .questionnaire-card > p {
     margin-bottom: 28px;
-    color: #555;
+    color: #4b5563;
+    line-height: 1.6;
 }
 
 .questionnaire-form {
@@ -32,36 +36,53 @@
 .questionnaire-form label {
     display: grid;
     gap: 8px;
-    font-weight: 600;
+    font-weight: 700;
+    color: #115e59;
 }
 
 .questionnaire-form input,
 .questionnaire-form select {
-    padding: 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 10px;
+    padding: 12px 14px;
+    border: 1px solid #99f6e4;
+    border-radius: 12px;
     font-size: 15px;
+    color: #1f2937;
+    background: #f8fffd;
+}
+
+.questionnaire-form input:focus,
+.questionnaire-form select:focus {
+    outline: none;
+    border-color: #14b8a6;
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.18);
 }
 
 .questionnaire-form button {
     margin-top: 12px;
     padding: 14px;
     border: none;
-    border-radius: 10px;
-    background: #1f2937;
+    border-radius: 999px;
+    background: #0f766e;
     color: white;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 800;
     cursor: pointer;
+    transition: 0.2s ease;
 }
 
 .questionnaire-form button:hover {
-    background: #111827;
+    background: #115e59;
 }
+
+.questionnaire-form button:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+}
+
 .form-error {
     margin-top: 20px;
     color: darkred;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .recommendations-section {
@@ -70,6 +91,7 @@
 
 .recommendations-section h2 {
     margin-bottom: 20px;
+    color: #0f766e;
 }
 
 .recommendations-list {
@@ -79,14 +101,15 @@
 
 .recommendation-card {
     padding: 18px;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    background: #f9fafb;
+    border: 1px solid #ccfbf1;
+    border-radius: 16px;
+    background: #f0fdfa;
 }
 
 .recommendation-card h3 {
     margin-top: 0;
     margin-bottom: 12px;
+    color: #0f766e;
 }
 
 .recommendation-card p {

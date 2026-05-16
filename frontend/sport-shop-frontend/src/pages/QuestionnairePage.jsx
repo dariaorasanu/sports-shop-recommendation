@@ -5,6 +5,12 @@ import {
     placeOrder,
 } from "../api/api";
 import "./QuestionnairePage.css";
+import {
+    ACTIVITY_LEVEL_OPTIONS,
+    OBJECTIVE_OPTIONS,
+    ACTIVITY_TYPE_OPTIONS,
+    ENVIRONMENT_OPTIONS,
+} from "../constants/formOptions";
 
 function QuestionnairePage() {
     const [formData, setFormData] = useState({
@@ -115,15 +121,6 @@ function QuestionnairePage() {
                 </p>
 
                 <form onSubmit={handleSubmit} className="questionnaire-form">
-                    <label>
-                        ID utilizator
-                        <input
-                            type="number"
-                            name="idUtilizator"
-                            value={formData.idUtilizator}
-                            onChange={handleChange}
-                        />
-                    </label>
 
                     <label>
                         Timp liber pe săptămână
@@ -142,9 +139,11 @@ function QuestionnairePage() {
                             value={formData.nivelActivitate}
                             onChange={handleChange}
                         >
-                            <option value="SEDENTAR">Sedentar</option>
-                            <option value="MODERAT">Moderat</option>
-                            <option value="ACTIV">Activ</option>
+                            {ACTIVITY_LEVEL_OPTIONS.map((option) => (
+                                <option key={option.value} value={option.value}>
+                                    {option.label}
+                                </option>
+                            ))}
                         </select>
                     </label>
 
@@ -155,12 +154,11 @@ function QuestionnairePage() {
                             value={formData.obiectiv}
                             onChange={handleChange}
                         >
-                            <option value="RELAXARE">Relaxare</option>
-                            <option value="SLABIRE">Slăbire</option>
-                            <option value="TONIFIERE">Tonifiere</option>
-                            <option value="REZISTENTA">Rezistență</option>
-                            <option value="COMPETITIE">Competiție</option>
-                            <option value="SOCIALIZARE">Socializare</option>
+                            {OBJECTIVE_OPTIONS.map((option) => (
+                                <option key={option.value} value={option.value}>
+                                    {option.label}
+                                </option>
+                            ))}
                         </select>
                     </label>
 
@@ -191,9 +189,11 @@ function QuestionnairePage() {
                             value={formData.preferintaTipActivitate}
                             onChange={handleChange}
                         >
-                            <option value="INDIVIDUAL">Individual</option>
-                            <option value="ECHIPA">Echipă</option>
-                            <option value="AMBELE">Ambele</option>
+                            {ACTIVITY_TYPE_OPTIONS.map((option) => (
+                                <option key={option.value} value={option.value}>
+                                    {option.label}
+                                </option>
+                            ))}
                         </select>
                     </label>
 
@@ -204,9 +204,11 @@ function QuestionnairePage() {
                             value={formData.preferintaMediu}
                             onChange={handleChange}
                         >
-                            <option value="INTERIOR">Interior</option>
-                            <option value="EXTERIOR">Exterior</option>
-                            <option value="AMBELE">Ambele</option>
+                            {ENVIRONMENT_OPTIONS.map((option) => (
+                                <option key={option.value} value={option.value}>
+                                    {option.label}
+                                </option>
+                            ))}
                         </select>
                     </label>
 

@@ -1,0 +1,60 @@
+.questionnaire-page {
+    min-height: 100vh;
+    padding: 40px;
+    background: #f4f6f8;
+    color: #222;
+}
+
+.questionnaire-card {
+    max-width: 760px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.questionnaire-card h1 {
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.questionnaire-card > p {
+    margin-bottom: 28px;
+    color: #555;
+}
+
+.questionnaire-form {
+    display: grid;
+    gap: 18px;
+}
+
+.questionnaire-form label {
+    display: grid;
+    gap: 8px;
+    font-weight: 600;
+}
+
+.questionnaire-form input,
+.questionnaire-form select {
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+.questionnaire-form button {
+    margin-top: 12px;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #1f2937;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.questionnaire-form button:hover {
+    background: #111827;
+}

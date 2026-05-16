@@ -1,9 +1,9 @@
-import SportsPage from "./pages/SportsPage.jsx";
+import QuestionnairePage from "./pages/QuestionnairePage";
 
 function App() {
   return (
       <div>
-        <SportsPage />
+        <QuestionnairePage />
       </div>
   );
 }

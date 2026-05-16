@@ -84,11 +84,15 @@ function QuestionnairePage({ selectedUserId }) {
         setSelectedRecommendationId(recommendation.idRecomandare);
         setProductsLoading(true);
         setProductsErrorMessage("");
-        setProducts([]);
 
         try {
             const data = await getProductsBySport(recommendation.idSport);
-            setProducts(data);
+
+            const filteredProducts = data.filter(
+                (product) => product.nivelRecomandat === recommendation.nivelRecomandat
+            );
+
+            setProducts(filteredProducts);
         } catch (error) {
             setProductsErrorMessage(error.message);
         } finally {
@@ -295,7 +299,7 @@ function QuestionnairePage({ selectedUserId }) {
 
                                     <button
                                         type="button"
-                                        className="secondary-button"
+                                        className="products-button"
                                         onClick={() => handleViewProducts(recommendation)}
                                     >
                                         Vezi produse

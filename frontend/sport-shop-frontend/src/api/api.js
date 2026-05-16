@@ -29,3 +29,19 @@ export async function createQuestionnaire(questionnaireData) {
 
     return response.json();
 }
+
+
+export async function getProductsBySport(sportId) {
+    const response = await fetch(`${BASE_URL}/products/sport/${sportId}`);
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        console.log("Backend error:", errorText);
+
+        throw new Error(
+            errorText || "Nu s-au putut încărca produsele pentru sportul selectat."
+        );
+    }
+
+    return response.json();
+}

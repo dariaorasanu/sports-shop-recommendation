@@ -115,3 +115,62 @@
 .recommendation-card p {
     margin: 6px 0;
 }
+.secondary-button {
+    margin-top: 14px;
+    padding: 10px 16px;
+    border: 1px solid #0f766e;
+    border-radius: 999px;
+    background: white;
+    color: #0f766e;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.secondary-button:hover {
+    background: #0f766e;
+    color: white;
+}
+
+.products-section {
+    margin-top: 36px;
+}
+
+.products-section h2 {
+    margin-bottom: 20px;
+    color: #0f766e;
+}
+
+.products-list {
+    display: grid;
+    gap: 16px;
+}
+
+.product-card {
+    padding: 18px;
+    border: 1px solid #ccfbf1;
+    border-radius: 16px;
+    background: white;
+    box-shadow: 0 8px 18px rgba(15, 118, 110, 0.08);
+}
+
+.product-card h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: #0f766e;
+}
+
+.product-card p {
+    margin: 6px 0;
+}
+.inline-products-section {
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid #ccfbf1;
+}
+
+.inline-products-section h4 {
+    margin: 0 0 14px;
+    color: #0f766e;
+    font-size: 18px;
+}

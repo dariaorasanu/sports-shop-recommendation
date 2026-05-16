@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { createQuestionnaire } from "../api/api";
-import "./QuestionnairePage.css";
+import { createQuestionnaire, getProductsBySport } from "../api/api";import "./QuestionnairePage.css";
 
 function QuestionnairePage() {
     const [formData, setFormData] = useState({
@@ -18,6 +17,10 @@ function QuestionnairePage() {
     const [recommendations, setRecommendations] = useState([]);
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [selectedRecommendationId, setSelectedRecommendationId] = useState(null);
+    const [products, setProducts] = useState([]);
+    const [productsLoading, setProductsLoading] = useState(false);
+    const [productsErrorMessage, setProductsErrorMessage] = useState("");
 
     function handleChange(event) {
         const { name, value } = event.target;
@@ -50,6 +53,21 @@ function QuestionnairePage() {
             setErrorMessage(error.message);
         } finally {
             setLoading(false);
+        }
+    }
+    async function handleViewProducts(recommendation) {
+        setSelectedRecommendationId(recommendation.idRecomandare);
+        setProductsLoading(true);
+        setProductsErrorMessage("");
+        setProducts([]);
+
+        try {
+            const data = await getProductsBySport(recommendation.idSport);
+            setProducts(data);
+        } catch (error) {
+            setProductsErrorMessage(error.message);
+        } finally {
+            setProductsLoading(false);
         }
     }
 
@@ -188,21 +206,75 @@ function QuestionnairePage() {
                                     key={recommendation.idRecomandare}
                                 >
                                     <h3>{recommendation.sportRecomandat}</h3>
+
                                     <p>
                                         <strong>Scor compatibilitate:</strong>{" "}
                                         {recommendation.scorCompatibilitate}
                                     </p>
+
                                     <p>
                                         <strong>Nivel recomandat:</strong>{" "}
                                         {recommendation.nivelRecomandat}
                                     </p>
+
                                     <p>
                                         <strong>Mediu:</strong> {recommendation.mediu}
                                     </p>
+
                                     <p>
                                         <strong>Tip activitate:</strong>{" "}
                                         {recommendation.tipActivitate}
                                     </p>
+
+                                    <button
+                                        type="button"
+                                        className="secondary-button"
+                                        onClick={() => handleViewProducts(recommendation)}
+                                    >
+                                        Vezi produse
+                                    </button>
+
+                                    {selectedRecommendationId === recommendation.idRecomandare && (
+                                        <div className="inline-products-section">
+                                            <h4>Produse pentru {recommendation.sportRecomandat}</h4>
+
+                                            {productsLoading && <p>Se încarcă produsele...</p>}
+
+                                            {productsErrorMessage && (
+                                                <p className="form-error">{productsErrorMessage}</p>
+                                            )}
+
+                                            {!productsLoading &&
+                                                !productsErrorMessage &&
+                                                products.length === 0 && (
+                                                    <p>Nu există produse disponibile pentru acest sport.</p>
+                                                )}
+
+                                            {products.length > 0 && (
+                                                <div className="products-list">
+                                                    {products.map((product) => (
+                                                        <div className="product-card" key={product.idProdus}>
+                                                            <h3>{product.produs}</h3>
+
+                                                            <p>
+                                                                <strong>Categorie:</strong> {product.categorie}
+                                                            </p>
+
+                                                            <p>
+                                                                <strong>Preț:</strong> {product.pret} lei
+                                                            </p>
+
+                                                            <p>
+                                                                <strong>Stoc:</strong> {product.stoc}
+                                                            </p>
+
+                                                            <p>{product.descriere}</p>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
                                 </div>
                             ))}
                         </div>

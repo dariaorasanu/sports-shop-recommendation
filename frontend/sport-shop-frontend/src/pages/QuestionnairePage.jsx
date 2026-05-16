@@ -35,12 +35,23 @@ function QuestionnairePage({ selectedUserId }) {
     const [orderLoadingProductId, setOrderLoadingProductId] = useState(null);
     const [orderMessage, setOrderMessage] = useState("");
     const [orderErrorMessage, setOrderErrorMessage] = useState("");
-
+    const [orderFormData, setOrderFormData] = useState({
+        cantitate: 1,
+        adresaLivrare: "",
+    });
     function handleChange(event) {
         const { name, value } = event.target;
 
         setFormData({
             ...formData,
+            [name]: value,
+        });
+    }
+    function handleOrderFormChange(event) {
+        const { name, value } = event.target;
+
+        setOrderFormData({
+            ...orderFormData,
             [name]: value,
         });
     }
@@ -86,6 +97,21 @@ function QuestionnairePage({ selectedUserId }) {
     }
 
     async function handlePlaceOrder(product) {
+        if (!orderFormData.adresaLivrare.trim()) {
+            setOrderErrorMessage("Te rugăm să introduci adresa de livrare.");
+            return;
+        }
+
+        if (Number(orderFormData.cantitate) <= 0) {
+            setOrderErrorMessage("Cantitatea trebuie să fie mai mare decât 0.");
+            return;
+        }
+
+        if (Number(orderFormData.cantitate) > product.stoc) {
+            setOrderErrorMessage("Cantitatea aleasă depășește stocul disponibil.");
+            return;
+        }
+
         setOrderLoadingProductId(product.idProdus);
         setOrderMessage("");
         setOrderErrorMessage("");
@@ -93,16 +119,22 @@ function QuestionnairePage({ selectedUserId }) {
         const orderData = {
             idUtilizator: Number(selectedUserId),
             idProdus: product.idProdus,
-            cantitate: 1,
-            adresaLivrare: "Strada Test 10, Iasi",
+            cantitate: Number(orderFormData.cantitate),
+            adresaLivrare: orderFormData.adresaLivrare,
         };
 
         try {
             await placeOrder(orderData);
+
             setOrderMessage(`Comanda pentru ${product.produs} a fost plasată cu succes.`);
 
             const updatedProducts = await getProductsBySport(product.idSport);
             setProducts(updatedProducts);
+
+            setOrderFormData({
+                cantitate: 1,
+                adresaLivrare: "",
+            });
         } catch (error) {
             setOrderErrorMessage(error.message);
         } finally {
@@ -313,7 +345,30 @@ function QuestionnairePage({ selectedUserId }) {
                                                             <p>
                                                                 <strong>Nivel recomandat:</strong> {product.nivelRecomandat}
                                                             </p>
+                                                            <div className="order-form">
+                                                                <label>
+                                                                    Cantitate
+                                                                    <input
+                                                                        type="number"
+                                                                        name="cantitate"
+                                                                        min="1"
+                                                                        max={product.stoc}
+                                                                        value={orderFormData.cantitate}
+                                                                        onChange={handleOrderFormChange}
+                                                                    />
+                                                                </label>
 
+                                                                <label>
+                                                                    Adresă livrare
+                                                                    <input
+                                                                        type="text"
+                                                                        name="adresaLivrare"
+                                                                        placeholder="Ex: Strada Test 10, Iași"
+                                                                        value={orderFormData.adresaLivrare}
+                                                                        onChange={handleOrderFormChange}
+                                                                    />
+                                                                </label>
+                                                            </div>
                                                             <button
                                                                 type="button"
                                                                 className="order-button"

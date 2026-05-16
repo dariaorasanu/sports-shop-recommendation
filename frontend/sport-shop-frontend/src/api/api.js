@@ -78,3 +78,41 @@ export async function getOrdersByUser(userId) {
 
     return response.json();
 }
+
+export async function registerUser(registerData) {
+    const response = await fetch(`${BASE_URL}/auth/register`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(registerData),
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        console.log("Backend error:", errorText);
+
+        throw new Error("Nu s-a putut crea contul.");
+    }
+
+    return response.json();
+}
+
+export async function loginUser(loginData) {
+    const response = await fetch(`${BASE_URL}/auth/login`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(loginData),
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        console.log("Backend error:", errorText);
+
+        throw new Error("Email sau parolă greșită.");
+    }
+
+    return response.json();
+}

@@ -12,9 +12,8 @@ import {
     ENVIRONMENT_OPTIONS,
 } from "../constants/formOptions";
 
-function QuestionnairePage() {
+function QuestionnairePage({ selectedUserId }) {
     const [formData, setFormData] = useState({
-        idUtilizator: 1,
         timpLiberOre: 5,
         nivelActivitate: "SEDENTAR",
         obiectiv: "RELAXARE",
@@ -24,18 +23,18 @@ function QuestionnairePage() {
         preferintaMediu: "INTERIOR",
         tolerantaEfort: 2,
     });
-
     const [recommendations, setRecommendations] = useState([]);
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+
     const [selectedRecommendationId, setSelectedRecommendationId] = useState(null);
     const [products, setProducts] = useState([]);
     const [productsLoading, setProductsLoading] = useState(false);
     const [productsErrorMessage, setProductsErrorMessage] = useState("");
+
     const [orderLoadingProductId, setOrderLoadingProductId] = useState(null);
     const [orderMessage, setOrderMessage] = useState("");
     const [orderErrorMessage, setOrderErrorMessage] = useState("");
-
 
     function handleChange(event) {
         const { name, value } = event.target;
@@ -55,12 +54,12 @@ function QuestionnairePage() {
 
         const questionnaireData = {
             ...formData,
-            idUtilizator: Number(formData.idUtilizator),
+            idUtilizator: Number(selectedUserId),
             timpLiberOre: Number(formData.timpLiberOre),
             bugetEstimat: Number(formData.bugetEstimat),
             tolerantaEfort: Number(formData.tolerantaEfort),
         };
-
+        console.log("Questionnaire request:", questionnaireData);
         try {
             const data = await createQuestionnaire(questionnaireData);
             setRecommendations(data);
@@ -92,7 +91,7 @@ function QuestionnairePage() {
         setOrderErrorMessage("");
 
         const orderData = {
-            idUtilizator: Number(formData.idUtilizator),
+            idUtilizator: Number(selectedUserId),
             idProdus: product.idProdus,
             cantitate: 1,
             adresaLivrare: "Strada Test 10, Iasi",

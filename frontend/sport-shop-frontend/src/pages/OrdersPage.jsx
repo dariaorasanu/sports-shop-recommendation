@@ -2,15 +2,25 @@ import { useEffect, useState } from "react";
 import { getOrdersByUser } from "../api/api";
 import "./OrdersPage.css";
 
-function OrdersPage() {
-    const userId = 1;
+function OrdersPage({ selectedUserId }) {
 
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
 
+    function formatDate(dateValue) {
+        if (!dateValue) {
+            return "-";
+        }
+
+        return new Date(dateValue).toLocaleString("ro-RO");
+    }
     useEffect(() => {
-        getOrdersByUser(userId)
+        if (!selectedUserId) {
+            return;
+        }
+
+        getOrdersByUser(selectedUserId)
             .then((data) => {
                 setOrders(data);
             })
@@ -20,7 +30,7 @@ function OrdersPage() {
             .finally(() => {
                 setLoading(false);
             });
-    }, []);
+    }, [selectedUserId]);
 
     if (loading) {
         return <p className="orders-message">Se încarcă comenzile...</p>;
@@ -73,7 +83,7 @@ function OrdersPage() {
                             </p>
 
                             <p>
-                                <strong>Data comenzii:</strong> {order.dataComanda}
+                                <strong>Data comenzii:</strong> {formatDate(order.dataComanda)}
                             </p>
                         </div>
                     ))}

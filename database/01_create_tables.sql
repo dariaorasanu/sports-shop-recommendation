@@ -14,6 +14,7 @@ CREATE TABLE utilizatori (
                              data_nastere DATE NOT NULL,
                              email VARCHAR(100) NOT NULL UNIQUE,
                              telefon VARCHAR(20),
+                             parola VARCHAR(100) NOT NULL,
                              data_inregistrare TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

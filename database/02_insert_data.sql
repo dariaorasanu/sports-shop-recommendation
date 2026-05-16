@@ -9,22 +9,22 @@ TRUNCATE TABLE utilizatori RESTART IDENTITY CASCADE;
 
 
 
-INSERT INTO utilizatori (nume, prenume, data_nastere, email, telefon) VALUES
-                                                                          ('Popescu', 'Ana', '2002-04-12', 'ana.popescu@example.com', '0711111111'),
-                                                                          ('Ionescu', 'Mihai', '2001-09-20', 'mihai.ionescu@example.com', '0711111112'),
-                                                                          ('Dumitrescu', 'Ioana', '2003-01-15', 'ioana.dumitrescu@example.com', '0711111113'),
-                                                                          ('Stan', 'Andrei', '2000-11-03', 'andrei.stan@example.com', '0711111114'),
-                                                                          ('Georgescu', 'Maria', '2004-06-25', 'maria.georgescu@example.com', '0711111115'),
-                                                                          ('Marin', 'Alexandru', '1999-02-17', 'alexandru.marin@example.com', '0711111116'),
-                                                                          ('Tudor', 'Elena', '2002-08-08', 'elena.tudor@example.com', '0711111117'),
-                                                                          ('Radu', 'Cristian', '2001-12-30', 'cristian.radu@example.com', '0711111118'),
-                                                                          ('Matei', 'Bianca', '2003-05-19', 'bianca.matei@example.com', '0711111119'),
-                                                                          ('Enache', 'Vlad', '2000-03-22', 'vlad.enache@example.com', '0711111120'),
-                                                                          ('Ilie', 'Daria', '2004-10-01', 'daria.ilie@example.com', '0711111121'),
-                                                                          ('Munteanu', 'Rares', '1998-07-14', 'rares.munteanu@example.com', '0711111122'),
-                                                                          ('Lupu', 'Teodora', '2002-09-09', 'teodora.lupu@example.com', '0711111123'),
-                                                                          ('Nistor', 'Paul', '2001-01-28', 'paul.nistor@example.com', '0711111124'),
-                                                                          ('Constantin', 'Irina', '2003-04-05', 'irina.constantin@example.com', '0711111125');
+INSERT INTO utilizatori (nume, prenume, data_nastere, email, telefon, parola) VALUES
+                                                                          ('Popescu', 'Ana', '2002-04-12', 'ana.popescu@example.com', '0711111111', 'parola123'),
+                                                                          ('Ionescu', 'Mihai', '2001-09-20', 'mihai.ionescu@example.com', '0711111112', 'parola123'),
+                                                                          ('Dumitrescu', 'Ioana', '2003-01-15', 'ioana.dumitrescu@example.com', '0711111113', 'parola123'),
+                                                                          ('Stan', 'Andrei', '2000-11-03', 'andrei.stan@example.com', '0711111114', 'parola123'),
+                                                                          ('Georgescu', 'Maria', '2004-06-25', 'maria.georgescu@example.com', '0711111115', 'parola123'),
+                                                                          ('Marin', 'Alexandru', '1999-02-17', 'alexandru.marin@example.com', '0711111116', 'parola123'),
+                                                                          ('Tudor', 'Elena', '2002-08-08', 'elena.tudor@example.com', '0711111117', 'parola123'),
+                                                                          ('Radu', 'Cristian', '2001-12-30', 'cristian.radu@example.com', '0711111118', 'parola123'),
+                                                                          ('Matei', 'Bianca', '2003-05-19', 'bianca.matei@example.com', '0711111119', 'parola123'),
+                                                                          ('Enache', 'Vlad', '2000-03-22', 'vlad.enache@example.com', '0711111120', 'parola123'),
+                                                                          ('Ilie', 'Daria', '2004-10-01', 'daria.ilie@example.com', '0711111121', 'parola123'),
+                                                                          ('Munteanu', 'Rares', '1998-07-14', 'rares.munteanu@example.com', '0711111122', 'parola123'),
+                                                                          ('Lupu', 'Teodora', '2002-09-09', 'teodora.lupu@example.com', '0711111123', 'parola123'),
+                                                                          ('Nistor', 'Paul', '2001-01-28', 'paul.nistor@example.com', '0711111124', 'parola123'),
+                                                                          ('Constantin', 'Irina', '2003-04-05', 'irina.constantin@example.com', '0711111125', 'parola123');
 
 
 INSERT INTO sporturi (denumire, mediu, nivel_efort, tip_activitate, obiectiv_principal, descriere) VALUES

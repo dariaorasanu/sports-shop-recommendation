@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { createQuestionnaire, getProductsBySport } from "../api/api";import "./QuestionnairePage.css";
+import {
+    createQuestionnaire,
+    getProductsBySport,
+    placeOrder,
+} from "../api/api";
 
 function QuestionnairePage() {
     const [formData, setFormData] = useState({
@@ -21,6 +25,10 @@ function QuestionnairePage() {
     const [products, setProducts] = useState([]);
     const [productsLoading, setProductsLoading] = useState(false);
     const [productsErrorMessage, setProductsErrorMessage] = useState("");
+    const [orderLoadingProductId, setOrderLoadingProductId] = useState(null);
+    const [orderMessage, setOrderMessage] = useState("");
+    const [orderErrorMessage, setOrderErrorMessage] = useState("");
+
 
     function handleChange(event) {
         const { name, value } = event.target;
@@ -68,6 +76,31 @@ function QuestionnairePage() {
             setProductsErrorMessage(error.message);
         } finally {
             setProductsLoading(false);
+        }
+    }
+
+    async function handlePlaceOrder(product) {
+        setOrderLoadingProductId(product.idProdus);
+        setOrderMessage("");
+        setOrderErrorMessage("");
+
+        const orderData = {
+            idUtilizator: Number(formData.idUtilizator),
+            idProdus: product.idProdus,
+            cantitate: 1,
+            adresaLivrare: "Strada Test 10, Iasi",
+        };
+
+        try {
+            await placeOrder(orderData);
+            setOrderMessage(`Comanda pentru ${product.produs} a fost plasată cu succes.`);
+
+            const updatedProducts = await getProductsBySport(product.idSport);
+            setProducts(updatedProducts);
+        } catch (error) {
+            setOrderErrorMessage(error.message);
+        } finally {
+            setOrderLoadingProductId(null);
         }
     }
 
@@ -250,6 +283,9 @@ function QuestionnairePage() {
                                                     <p>Nu există produse disponibile pentru acest sport.</p>
                                                 )}
 
+                                            {orderMessage && <p className="order-success">{orderMessage}</p>}
+
+                                            {orderErrorMessage && <p className="form-error">{orderErrorMessage}</p>}
                                             {products.length > 0 && (
                                                 <div className="products-list">
                                                     {products.map((product) => (
@@ -261,6 +297,10 @@ function QuestionnairePage() {
                                                             </p>
 
                                                             <p>
+                                                                <strong>Sport:</strong> {product.sport}
+                                                            </p>
+
+                                                            <p>
                                                                 <strong>Preț:</strong> {product.pret} lei
                                                             </p>
 
@@ -268,7 +308,20 @@ function QuestionnairePage() {
                                                                 <strong>Stoc:</strong> {product.stoc}
                                                             </p>
 
-                                                            <p>{product.descriere}</p>
+                                                            <p>
+                                                                <strong>Nivel recomandat:</strong> {product.nivelRecomandat}
+                                                            </p>
+
+                                                            <button
+                                                                type="button"
+                                                                className="order-button"
+                                                                disabled={orderLoadingProductId === product.idProdus || product.stoc <= 0}
+                                                                onClick={() => handlePlaceOrder(product)}
+                                                            >
+                                                                {orderLoadingProductId === product.idProdus
+                                                                    ? "Se plasează..."
+                                                                    : "Comandă produs"}
+                                                            </button>
                                                         </div>
                                                     ))}
                                                 </div>
@@ -286,3 +339,4 @@ function QuestionnairePage() {
 }
 
 export default QuestionnairePage;
+

@@ -174,3 +174,33 @@
     color: #0f766e;
     font-size: 18px;
 }
+
+.order-button {
+    margin-top: 14px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 999px;
+    background: #0f766e;
+    color: white;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.order-button:hover {
+    background: #115e59;
+}
+
+.order-button:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+}
+
+.order-success {
+    margin: 14px 0;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: #dcfce7;
+    color: #166534;
+    font-weight: 700;
+}

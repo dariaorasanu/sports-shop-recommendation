@@ -45,3 +45,21 @@ export async function getProductsBySport(sportId) {
 
     return response.json();
 }
+export async function placeOrder(orderData) {
+    const response = await fetch(`${BASE_URL}/orders`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        console.log("Backend error:", errorText);
+
+        throw new Error(errorText || "Nu s-a putut plasa comanda.");
+    }
+
+    return response.json();
+}

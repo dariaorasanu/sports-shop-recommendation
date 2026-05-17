@@ -67,6 +67,31 @@ public class OrderRepository {
         ));
     }
 
+
+    public String findStatusById(Integer orderId) {
+        String sql = """
+            SELECT status
+            FROM comenzi
+            WHERE id_comanda = ?
+            """;
+
+        return jdbcTemplate.queryForObject(sql, String.class, orderId);
+    }
+
+    public void updateStatus(Integer orderId, String status) {
+        String sql = """
+            UPDATE comenzi
+            SET status = ?
+            WHERE id_comanda = ?
+            """;
+
+        int updatedRows = jdbcTemplate.update(sql, status, orderId);
+
+        if (updatedRows == 0) {
+            throw new IllegalArgumentException("Comanda nu exista.");
+        }
+    }
+
     public List<OrderDetailsResponse> findByUserId(Integer userId) {
         String sql = """
             SELECT c.id_comanda AS id_comanda,

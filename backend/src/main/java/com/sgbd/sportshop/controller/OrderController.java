@@ -3,6 +3,7 @@ package com.sgbd.sportshop.controller;
 import com.sgbd.sportshop.dto.OrderDetailsResponse;
 import com.sgbd.sportshop.dto.OrderRequest;
 import com.sgbd.sportshop.dto.OrderResponse;
+import com.sgbd.sportshop.dto.OrderStatusUpdateRequest;
 import com.sgbd.sportshop.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,5 +38,15 @@ public class OrderController {
     @GetMapping("/user/{userId}")
     public List<OrderDetailsResponse> getOrdersByUserId(@PathVariable Integer userId) {
         return orderService.getOrdersByUserId(userId);
+    }
+
+    @PutMapping("/{orderId}/status")
+    public ResponseEntity<OrderResponse> updateOrderStatus(
+            @PathVariable Integer orderId,
+            @RequestBody OrderStatusUpdateRequest request
+    ) {
+        OrderResponse response = orderService.updateOrderStatus(orderId, request);
+
+        return ResponseEntity.ok(response);
     }
 }

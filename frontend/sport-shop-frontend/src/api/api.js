@@ -132,3 +132,24 @@ export async function getRecommendationsByUser(userId) {
 
     return response.json();
 }
+export async function updateOrderStatus(orderId, status) {
+    const response = await fetch(`${BASE_URL}/orders/${orderId}/status`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status }),
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+
+        console.log("Backend error:", errorData);
+
+        throw new Error(
+            errorData?.message || "Statusul comenzii nu a putut fi actualizat."
+        );
+    }
+
+    return response.json();
+}

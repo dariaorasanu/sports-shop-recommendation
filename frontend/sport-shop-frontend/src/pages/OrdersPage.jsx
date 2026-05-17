@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getOrdersByUser } from "../api/api";
+import { getOrdersByUser, updateOrderStatus } from "../api/api";
 import "./OrdersPage.css";
 
 function OrdersPage({ selectedUserId }) {
@@ -7,6 +7,9 @@ function OrdersPage({ selectedUserId }) {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
+    const [statusLoadingOrderId, setStatusLoadingOrderId] = useState(null);
+    const [statusMessage, setStatusMessage] = useState("");
+    const [statusErrorMessage, setStatusErrorMessage] = useState("");
 
     function formatDate(dateValue) {
         if (!dateValue) {
@@ -31,6 +34,27 @@ function OrdersPage({ selectedUserId }) {
                 setLoading(false);
             });
     }
+    async function handleUpdateOrderStatus(orderId, status) {
+        console.log("Click status button:", orderId, status);
+
+        setStatusLoadingOrderId(orderId);
+        setStatusMessage("");
+        setStatusErrorMessage("");
+
+        try {
+            await updateOrderStatus(orderId, status);
+
+            setStatusMessage("Statusul comenzii a fost actualizat.");
+
+            const updatedOrders = await getOrdersByUser(selectedUserId);
+            setOrders(updatedOrders);
+        } catch (error) {
+            console.log("Status update error:", error);
+            setStatusErrorMessage(error.message);
+        } finally {
+            setStatusLoadingOrderId(null);
+        }
+    }
     useEffect(() => {
         loadOrders();
     }, [selectedUserId]);
@@ -52,6 +76,11 @@ function OrdersPage({ selectedUserId }) {
                 </p>
 
             </header>
+            {statusMessage && <p className="success-message">{statusMessage}</p>}
+
+            {statusErrorMessage && (
+                <p className="error-message">{statusErrorMessage}</p>
+            )}
 
             {orders.length === 0 ? (
                 <div className="empty-orders-card">
@@ -92,6 +121,38 @@ function OrdersPage({ selectedUserId }) {
                                 <strong>Status:</strong>{" "}
                                 <span className="status-badge">{order.status}</span>
                             </p>
+                            <div className="order-status-actions">
+                                {order.status === "NOUA" && (
+                                    <>
+                                        <button
+                                            type="button"
+                                            onClick={() => handleUpdateOrderStatus(order.idComanda, "CONFIRMATA")}
+                                            disabled={statusLoadingOrderId === order.idComanda}
+                                        >
+                                            Confirmă comanda
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            className="cancel-status-button"
+                                            onClick={() => handleUpdateOrderStatus(order.idComanda, "ANULATA")}
+                                            disabled={statusLoadingOrderId === order.idComanda}
+                                        >
+                                            Anulează comanda
+                                        </button>
+                                    </>
+                                )}
+
+                                {order.status === "CONFIRMATA" && (
+                                    <button
+                                        type="button"
+                                        onClick={() => handleUpdateOrderStatus(order.idComanda, "FINALIZATA")}
+                                        disabled={statusLoadingOrderId === order.idComanda}
+                                    >
+                                        Finalizează comanda
+                                    </button>
+                                )}
+                            </div>
 
                             <p>
                                 <strong>Adresă livrare:</strong> {order.adresaLivrare}

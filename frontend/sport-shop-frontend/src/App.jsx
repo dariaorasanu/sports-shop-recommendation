@@ -9,6 +9,7 @@ import "./App.css";
 function App() {
     const [currentPage, setCurrentPage] = useState("questionnaire");
 
+    const [recommendationsRefreshKey, setRecommendationsRefreshKey] = useState(0);
     const [loggedUser, setLoggedUser] = useState(() => {
         const savedUser = localStorage.getItem("loggedUser");
 
@@ -18,6 +19,10 @@ function App() {
 
         return null;
     });
+
+    function handleQuestionnaireGenerated() {
+        setRecommendationsRefreshKey((currentValue) => currentValue + 1);
+    }
 
     function handleLogin(user) {
         setLoggedUser(user);
@@ -100,15 +105,19 @@ function App() {
             {currentPage === "sports" && <SportsPage />}
 
             {currentPage === "questionnaire" && (
-                <QuestionnairePage selectedUserId={loggedUser.idUtilizator} />
-            )}
+                <QuestionnairePage
+                    selectedUserId={loggedUser.idUtilizator}
+                    onQuestionnaireGenerated={handleQuestionnaireGenerated}
+                />            )}
 
             {currentPage === "orders" && (
                 <OrdersPage selectedUserId={loggedUser.idUtilizator} />
             )}
             {currentPage === "myRecommendations" && (
-                <MyRecommendationsPage selectedUserId={loggedUser.idUtilizator} />
-            )}
+                <MyRecommendationsPage
+                    selectedUserId={loggedUser.idUtilizator}
+                    refreshKey={recommendationsRefreshKey}
+                />            )}
         </div>
     );
 }

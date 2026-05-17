@@ -6,8 +6,7 @@ import {
 } from "../api/api";
 import "./MyRecommendationsPage.css";
 
-function MyRecommendationsPage({ selectedUserId }) {
-    const [recommendations, setRecommendations] = useState([]);
+function MyRecommendationsPage({ selectedUserId, refreshKey }) {    const [recommendations, setRecommendations] = useState([]);
     const [loading, setLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -33,6 +32,12 @@ function MyRecommendationsPage({ selectedUserId }) {
         getRecommendationsByUser(selectedUserId)
             .then((data) => {
                 setRecommendations(data);
+                setErrorMessage("");
+                setProducts([]);
+                setSelectedRecommendationId(null);
+                setProductsErrorMessage("");
+                setOrderMessage("");
+                setOrderErrorMessage("");
             })
             .catch((error) => {
                 setErrorMessage(error.message);
@@ -40,7 +45,8 @@ function MyRecommendationsPage({ selectedUserId }) {
             .finally(() => {
                 setLoading(false);
             });
-    }, [selectedUserId]);
+    }, [selectedUserId, refreshKey]);
+
     function handleOrderFormChange(event) {
         const { name, value } = event.target;
 

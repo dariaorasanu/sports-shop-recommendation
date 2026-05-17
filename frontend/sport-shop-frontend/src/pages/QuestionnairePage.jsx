@@ -14,8 +14,7 @@ import {
 import "./QuestionnairePage.css";
 
 
-function QuestionnairePage({ selectedUserId }) {
-    const [formData, setFormData] = useState({
+function QuestionnairePage({ selectedUserId, onQuestionnaireGenerated }) {    const [formData, setFormData] = useState({
         timpLiberOre: 5,
         nivelActivitate: "SEDENTAR",
         obiectiv: "RELAXARE",
@@ -77,6 +76,7 @@ function QuestionnairePage({ selectedUserId }) {
         try {
             const data = await createQuestionnaire(questionnaireData);
             setRecommendations(data);
+            onQuestionnaireGenerated?.();
         } catch (error) {
             setErrorMessage(error.message);
         } finally {

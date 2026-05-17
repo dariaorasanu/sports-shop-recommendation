@@ -10,6 +10,7 @@ function OrdersPage({ selectedUserId }) {
     const [statusLoadingOrderId, setStatusLoadingOrderId] = useState(null);
     const [statusMessage, setStatusMessage] = useState("");
     const [statusErrorMessage, setStatusErrorMessage] = useState("");
+    const [statusModal, setStatusModal] = useState(null);
 
     function formatDate(dateValue) {
         if (!dateValue) {
@@ -34,22 +35,59 @@ function OrdersPage({ selectedUserId }) {
                 setLoading(false);
             });
     }
-    async function handleUpdateOrderStatus(orderId, status) {
-        console.log("Click status button:", orderId, status);
+    function handleOpenStatusModal(order, status) {
+        let title = "";
+        let message = "";
+        let confirmText = "Confirmă";
 
-        setStatusLoadingOrderId(orderId);
+        if (status === "CONFIRMATA") {
+            title = "Confirmare comandă";
+            message = `Confirmi comanda #${order.idComanda}? Adresa de livrare este: ${order.adresaLivrare}.`;
+            confirmText = "Confirmă comanda";
+        }
+
+        if (status === "ANULATA") {
+            title = "Anulare comandă";
+            message = `Sigur vrei să anulezi comanda #${order.idComanda}? Nu renunța la mișcare!`;
+            confirmText = "Anulează comanda";
+        }
+
+        if (status === "FINALIZATA") {
+            title = "Finalizare comandă";
+            message = `Confirmi finalizarea comenzii #${order.idComanda}? Această acțiune marchează comanda ca livrată în condiții optime.`;
+            confirmText = "Finalizează comanda";
+        }
+
+        setStatusModal({
+            order,
+            status,
+            title,
+            message,
+            confirmText,
+        });
+    }
+
+    async function confirmStatusUpdate() {
+        if (!statusModal) {
+            return;
+        }
+
+        const { order, status } = statusModal;
+
+        setStatusLoadingOrderId(order.idComanda);
         setStatusMessage("");
         setStatusErrorMessage("");
 
         try {
-            await updateOrderStatus(orderId, status);
+            await updateOrderStatus(order.idComanda, status);
 
             setStatusMessage("Statusul comenzii a fost actualizat.");
 
             const updatedOrders = await getOrdersByUser(selectedUserId);
             setOrders(updatedOrders);
+
+            setStatusModal(null);
         } catch (error) {
-            console.log("Status update error:", error);
             setStatusErrorMessage(error.message);
         } finally {
             setStatusLoadingOrderId(null);
@@ -78,6 +116,38 @@ function OrdersPage({ selectedUserId }) {
             </header>
             {statusMessage && <p className="success-message">{statusMessage}</p>}
 
+            {statusModal && (
+                <div className="modal-overlay">
+                    <div className="status-modal">
+                        <h2>{statusModal.title}</h2>
+
+                        <p>{statusModal.message}</p>
+
+                        <div className="modal-actions">
+                            <button
+                                type="button"
+                                className="modal-secondary-button"
+                                onClick={() => setStatusModal(null)}
+                            >
+                                Renunță
+                            </button>
+
+                            <button
+                                type="button"
+                                className={
+                                    statusModal.status === "ANULATA"
+                                        ? "modal-danger-button"
+                                        : "modal-primary-button"
+                                }
+                                onClick={confirmStatusUpdate}
+                                disabled={statusLoadingOrderId === statusModal.order.idComanda}
+                            >
+                                {statusModal.confirmText}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
             {statusErrorMessage && (
                 <p className="error-message">{statusErrorMessage}</p>
             )}
@@ -126,7 +196,7 @@ function OrdersPage({ selectedUserId }) {
                                     <>
                                         <button
                                             type="button"
-                                            onClick={() => handleUpdateOrderStatus(order.idComanda, "CONFIRMATA")}
+                                            onClick={() => handleOpenStatusModal(order, "CONFIRMATA")}
                                             disabled={statusLoadingOrderId === order.idComanda}
                                         >
                                             Confirmă comanda
@@ -135,7 +205,7 @@ function OrdersPage({ selectedUserId }) {
                                         <button
                                             type="button"
                                             className="cancel-status-button"
-                                            onClick={() => handleUpdateOrderStatus(order.idComanda, "ANULATA")}
+                                            onClick={() => handleOpenStatusModal(order, "ANULATA")}
                                             disabled={statusLoadingOrderId === order.idComanda}
                                         >
                                             Anulează comanda
@@ -146,7 +216,7 @@ function OrdersPage({ selectedUserId }) {
                                 {order.status === "CONFIRMATA" && (
                                     <button
                                         type="button"
-                                        onClick={() => handleUpdateOrderStatus(order.idComanda, "FINALIZATA")}
+                                        onClick={() => handleOpenStatusModal(order, "FINALIZATA")}
                                         disabled={statusLoadingOrderId === order.idComanda}
                                     >
                                         Finalizează comanda

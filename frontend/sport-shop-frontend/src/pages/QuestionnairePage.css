@@ -1,7 +1,7 @@
 .questionnaire-page {
     min-height: calc(100vh - 88px);
     padding: 44px;
-    background: #ecfdf5;
+    background: #f0f9ff;
     color: #1f2937;
 }
 
@@ -9,16 +9,16 @@
     max-width: 780px;
     margin: 0 auto;
     background: white;
-    border: 1px solid #ccfbf1;
+    border: 1px solid #dbeafe;
     border-radius: 22px;
     padding: 34px;
-    box-shadow: 0 12px 28px rgba(15, 118, 110, 0.12);
+    box-shadow: 0 12px 28px rgba(96, 165, 250, 0.12);
 }
 
 .questionnaire-card h1 {
     margin-top: 0;
     margin-bottom: 12px;
-    color: #0f766e;
+    color: #60a5fa;
     font-size: 34px;
 }
 
@@ -37,13 +37,13 @@
     display: grid;
     gap: 8px;
     font-weight: 700;
-    color: #115e59;
+    color: #2563eb;
 }
 
 .questionnaire-form input,
 .questionnaire-form select {
     padding: 12px 14px;
-    border: 1px solid #99f6e4;
+    border: 1px solid #bfdbfe;
     border-radius: 12px;
     font-size: 15px;
     color: #1f2937;
@@ -53,7 +53,7 @@
 .questionnaire-form input:focus,
 .questionnaire-form select:focus {
     outline: none;
-    border-color: #14b8a6;
+    border-color: #93c5fd;
     box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.18);
 }
 
@@ -62,7 +62,7 @@
     padding: 14px;
     border: none;
     border-radius: 999px;
-    background: #0f766e;
+    background: #60a5fa;
     color: white;
     font-size: 16px;
     font-weight: 800;
@@ -71,7 +71,7 @@
 }
 
 .questionnaire-form button:hover {
-    background: #115e59;
+    background: #2563eb;
 }
 
 .questionnaire-form button:disabled {
@@ -91,7 +91,7 @@
 
 .recommendations-section h2 {
     margin-bottom: 20px;
-    color: #0f766e;
+    color: #60a5fa;
 }
 
 .recommendations-list {
@@ -101,7 +101,7 @@
 
 .recommendation-card {
     padding: 18px;
-    border: 1px solid #ccfbf1;
+    border: 1px solid #dbeafe;
     border-radius: 16px;
     background: #f0fdfa;
 }
@@ -109,7 +109,7 @@
 .recommendation-card h3 {
     margin-top: 0;
     margin-bottom: 12px;
-    color: #0f766e;
+    color: #60a5fa;
 }
 
 .recommendation-card p {
@@ -118,17 +118,17 @@
 .secondary-button {
     margin-top: 14px;
     padding: 10px 16px;
-    border: 1px solid #0f766e;
+    border: 1px solid #60a5fa;
     border-radius: 999px;
     background: white;
-    color: #0f766e;
+    color: #60a5fa;
     font-weight: 800;
     cursor: pointer;
     transition: 0.2s ease;
 }
 
 .secondary-button:hover {
-    background: #0f766e;
+    background: #60a5fa;
     color: white;
 }
 
@@ -138,7 +138,7 @@
 
 .products-section h2 {
     margin-bottom: 20px;
-    color: #0f766e;
+    color: #60a5fa;
 }
 
 .products-list {
@@ -148,16 +148,16 @@
 
 .product-card {
     padding: 18px;
-    border: 1px solid #ccfbf1;
+    border: 1px solid #dbeafe;
     border-radius: 16px;
     background: white;
-    box-shadow: 0 8px 18px rgba(15, 118, 110, 0.08);
+    box-shadow: 0 8px 18px rgba(96, 165, 250, 0.08);
 }
 
 .product-card h3 {
     margin-top: 0;
     margin-bottom: 12px;
-    color: #0f766e;
+    color: #60a5fa;
 }
 
 .product-card p {
@@ -166,12 +166,12 @@
 .inline-products-section {
     margin-top: 20px;
     padding-top: 18px;
-    border-top: 1px solid #ccfbf1;
+    border-top: 1px solid #dbeafe;
 }
 
 .inline-products-section h4 {
     margin: 0 0 14px;
-    color: #0f766e;
+    color: #60a5fa;
     font-size: 18px;
 }
 
@@ -180,7 +180,7 @@
     padding: 10px 16px;
     border: none;
     border-radius: 999px;
-    background: #0f766e;
+    background: #60a5fa;
     color: white;
     font-weight: 800;
     cursor: pointer;
@@ -188,7 +188,7 @@
 }
 
 .order-button:hover {
-    background: #115e59;
+    background: #2563eb;
 }
 
 .order-button:disabled {
@@ -214,12 +214,12 @@
     display: grid;
     gap: 6px;
     font-weight: 700;
-    color: #115e59;
+    color: #2563eb;
 }
 
 .order-form input {
     padding: 10px 12px;
-    border: 1px solid #99f6e4;
+    border: 1px solid #bfdbfe;
     border-radius: 10px;
     font-size: 15px;
     background: #f8fffd;
@@ -227,6 +227,6 @@
 
 .order-form input:focus {
     outline: none;
-    border-color: #14b8a6;
+    border-color: #93c5fd;
     box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.18);
 }

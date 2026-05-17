@@ -4,7 +4,7 @@
 
 .app {
   min-height: 100vh;
-  background: #ecfdf5;
+  background: #f0f9ff;
   color: #1f2937;
 }
 
@@ -19,9 +19,8 @@
   gap: 24px;
 
   padding: 18px 44px;
-  background: linear-gradient(135deg, #0f766e, #14b8a6);
-  color: white;
-  box-shadow: 0 6px 18px rgba(15, 118, 110, 0.25);
+  background: linear-gradient(135deg, #3b82f6, #93c5fd);  color: white;
+  box-shadow: 0 6px 18px rgba(96, 165, 250, 0.25);
 }
 
 .brand h1 {
@@ -58,7 +57,7 @@
 
 .nav-buttons button.active {
   background: white;
-  color: #0f766e;
+  color: #60a5fa;
   border-color: white;
 }
 

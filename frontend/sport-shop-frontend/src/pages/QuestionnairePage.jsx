@@ -170,7 +170,7 @@ function QuestionnairePage({ selectedUserId }) {
                 <form onSubmit={handleSubmit} className="questionnaire-form">
 
                     <label>
-                        Timp liber pe săptămână
+                        Timp liber pe săptămână (ore)
                         <input
                             type="number"
                             name="timpLiberOre"
@@ -264,7 +264,7 @@ function QuestionnairePage({ selectedUserId }) {
                     </label>
 
                     <label>
-                        Toleranță efort
+                        Toleranță efort (1-5)
                         <input
                             type="number"
                             min="1"

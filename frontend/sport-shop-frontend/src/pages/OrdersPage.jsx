@@ -73,7 +73,17 @@ function OrdersPage({ selectedUserId }) {
                             <p>
                                 <strong>Email:</strong> {order.email}
                             </p>
+                            <p>
+                                <strong>Produs comandat:</strong> {order.produs}
+                            </p>
 
+                            <p>
+                                <strong>Cantitate:</strong> {order.cantitate}
+                            </p>
+
+                            <p>
+                                <strong>Preț unitar:</strong> {order.pretUnitar} lei
+                            </p>
                             <p>
                                 <strong>Total:</strong> {order.total} lei
                             </p>

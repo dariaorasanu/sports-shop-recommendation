@@ -12,6 +12,10 @@ public record OrderDetailsResponse(
         LocalDateTime dataComanda,
         String status,
         BigDecimal total,
-        String adresaLivrare
+        String adresaLivrare,
+        Integer idProdus,
+        String produs,
+        Integer cantitate,
+        BigDecimal pretUnitar
 ) {
 }

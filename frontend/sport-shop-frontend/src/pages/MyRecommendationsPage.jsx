@@ -61,7 +61,9 @@ function MyRecommendationsPage({ selectedUserId }) {
             const data = await getProductsBySport(recommendation.idSport);
 
             const filteredProducts = data.filter(
-                (product) => product.nivelRecomandat === recommendation.nivelRecomandat
+                (product) =>
+                    product.nivelRecomandat === recommendation.nivelRecomandat &&
+                    Number(product.pret) <= Number(recommendation.bugetEstimat)
             );
 
             setProducts(filteredProducts);
@@ -104,13 +106,16 @@ function MyRecommendationsPage({ selectedUserId }) {
 
             setOrderMessage(`Comanda pentru ${product.produs} a fost plasată cu succes.`);
 
-            const updatedProducts = await getProductsBySport(product.idSport);
-            const filteredProducts = updatedProducts.filter(
-                (updatedProduct) =>
-                    updatedProduct.nivelRecomandat === product.nivelRecomandat
+            setProducts((currentProducts) =>
+                currentProducts.map((currentProduct) =>
+                    currentProduct.idProdus === product.idProdus
+                        ? {
+                            ...currentProduct,
+                            stoc: currentProduct.stoc - Number(orderFormData.cantitate),
+                        }
+                        : currentProduct
+                )
             );
-
-            setProducts(filteredProducts);
 
             setOrderFormData({
                 cantitate: 1,
@@ -192,6 +197,9 @@ function MyRecommendationsPage({ selectedUserId }) {
                             <p>
                                 <strong>Obiectiv:</strong> {recommendation.obiectiv}
                             </p>
+                            <p>
+                                <strong>Buget estimativ:</strong> {recommendation.bugetEstimat} lei
+                            </p>
                             <button
                                 type="button"
                                 className="products-button"
@@ -199,6 +207,7 @@ function MyRecommendationsPage({ selectedUserId }) {
                             >
                                 Vezi produse
                             </button>
+
                             {selectedRecommendationId === recommendation.idRecomandare && (
                                 <div className="products-section">
                                     <h3>Produse recomandate pentru nivelul tău</h3>
@@ -216,8 +225,9 @@ function MyRecommendationsPage({ selectedUserId }) {
                                     )}
 
                                     {!productsLoading && products.length === 0 && (
-                                        <p>Nu există produse disponibile pentru acest sport și nivel.</p>
-                                    )}
+                                        <p>
+                                            Nu există produse disponibile pentru acest sport, nivel și buget.
+                                        </p>                                    )}
 
                                     <div className="products-list">
                                         {products.map((product) => (

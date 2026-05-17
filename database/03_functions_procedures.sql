@@ -56,7 +56,7 @@ DECLARE
     v_obiectiv VARCHAR(30);
     v_toleranta_efort INTEGER;
     v_timp_liber INTEGER;
-
+    v_restrictii_medicale VARCHAR(200);
     v_mediu_sport VARCHAR(20);
     v_tip_sport VARCHAR(20);
     v_obiectiv_sport VARCHAR(30);
@@ -68,12 +68,14 @@ BEGIN
            preferinta_tip_activitate,
            obiectiv,
            toleranta_efort,
-           timp_liber_ore
+           timp_liber_ore,
+           restrictii_medicale
     INTO v_preferinta_mediu,
          v_preferinta_tip,
          v_obiectiv,
          v_toleranta_efort,
-         v_timp_liber
+         v_timp_liber,
+        v_restrictii_medicale
     FROM chestionare
     WHERE id_chestionar = p_id_chestionar;
 
@@ -133,7 +135,30 @@ BEGIN
         v_scor := v_scor + 3;
     END IF;
 
-    RETURN v_scor;
+    -- Penalizari simple pentru restrictii medicale
+    IF v_restrictii_medicale = 'ASTM' AND v_nivel_efort >= 4 THEN
+        v_scor := v_scor - 20;
+    END IF;
+
+    IF v_restrictii_medicale = 'PROBLEME_ARTICULARE'
+        AND p_id_sport IN (1, 4, 5, 6, 11, 14) THEN
+        v_scor := v_scor - 20;
+    END IF;
+
+    IF v_restrictii_medicale = 'DURERI_SPATE'
+        AND p_id_sport IN (3, 10, 14) THEN
+        v_scor := v_scor - 15;
+    END IF;
+
+    IF v_restrictii_medicale = 'ACCIDENTARI_OSOASE'
+        AND p_id_sport IN (1, 4, 5, 10, 11, 14) THEN
+        v_scor := v_scor - 25;
+    END IF;
+
+    IF v_scor < 0 THEN
+        v_scor := 0;
+    END IF;
+        RETURN v_scor;
 END;
 $$;
 

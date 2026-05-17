@@ -19,10 +19,12 @@ export async function createQuestionnaire(questionnaireData) {
     });
 
     if (!response.ok) {
-        const errorText = await response.text();
-        console.log("Backend error:", errorText);
+        const errorData = await response.json().catch(() => null);
+
+        console.log("Backend error:", errorData);
 
         throw new Error(
+            errorData?.message ||
             "Chestionarul nu a putut fi trimis. Verifică valorile introduse."
         );
     }

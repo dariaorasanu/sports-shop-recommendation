@@ -4,13 +4,15 @@ import {
     getProductsBySport,
     placeOrder,
 } from "../api/api";
-import "./QuestionnairePage.css";
 import {
     ACTIVITY_LEVEL_OPTIONS,
     OBJECTIVE_OPTIONS,
     ACTIVITY_TYPE_OPTIONS,
     ENVIRONMENT_OPTIONS,
+    MEDICAL_RESTRICTION_OPTIONS,
 } from "../constants/formOptions";
+import "./QuestionnairePage.css";
+
 
 function QuestionnairePage({ selectedUserId }) {
     const [formData, setFormData] = useState({
@@ -39,6 +41,7 @@ function QuestionnairePage({ selectedUserId }) {
         cantitate: 1,
         adresaLivrare: "",
     });
+
     function handleChange(event) {
         const { name, value } = event.target;
 
@@ -89,9 +92,10 @@ function QuestionnairePage({ selectedUserId }) {
             const data = await getProductsBySport(recommendation.idSport);
 
             const filteredProducts = data.filter(
-                (product) => product.nivelRecomandat === recommendation.nivelRecomandat
+                (product) =>
+                    product.nivelRecomandat === recommendation.nivelRecomandat &&
+                    Number(product.pret) <= Number(recommendation.bugetEstimat)
             );
-
             setProducts(filteredProducts);
         } catch (error) {
             setProductsErrorMessage(error.message);
@@ -132,8 +136,16 @@ function QuestionnairePage({ selectedUserId }) {
 
             setOrderMessage(`Comanda pentru ${product.produs} a fost plasată cu succes.`);
 
-            const updatedProducts = await getProductsBySport(product.idSport);
-            setProducts(updatedProducts);
+            setProducts((currentProducts) =>
+                currentProducts.map((currentProduct) =>
+                    currentProduct.idProdus === product.idProdus
+                        ? {
+                            ...currentProduct,
+                            stoc: currentProduct.stoc - Number(orderFormData.cantitate),
+                        }
+                        : currentProduct
+                )
+            );
 
             setOrderFormData({
                 cantitate: 1,
@@ -196,15 +208,19 @@ function QuestionnairePage({ selectedUserId }) {
                             ))}
                         </select>
                     </label>
-
                     <label>
                         Restricții medicale
-                        <input
-                            type="text"
+                        <select
                             name="restrictiiMedicale"
                             value={formData.restrictiiMedicale}
                             onChange={handleChange}
-                        />
+                        >
+                            {MEDICAL_RESTRICTION_OPTIONS.map((option) => (
+                                <option key={option.value} value={option.value}>
+                                    {option.label}
+                                </option>
+                            ))}
+                        </select>
                     </label>
 
                     <label>
@@ -318,7 +334,9 @@ function QuestionnairePage({ selectedUserId }) {
                                             {!productsLoading &&
                                                 !productsErrorMessage &&
                                                 products.length === 0 && (
-                                                    <p>Nu există produse disponibile pentru acest sport.</p>
+                                                    <p>
+                                                        Nu există produse disponibile pentru acest sport, nivel și buget.
+                                                    </p>
                                                 )}
 
                                             {orderMessage && <p className="order-success">{orderMessage}</p>}
@@ -348,6 +366,9 @@ function QuestionnairePage({ selectedUserId }) {
 
                                                             <p>
                                                                 <strong>Nivel recomandat:</strong> {product.nivelRecomandat}
+                                                            </p>
+                                                            <p>
+                                                                <strong>Buget estimativ:</strong> {recommendation.bugetEstimat} lei
                                                             </p>
                                                             <div className="order-form">
                                                                 <label>

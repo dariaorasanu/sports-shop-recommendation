@@ -1,7 +1,16 @@
 export const ACTIVITY_LEVEL_OPTIONS = [
-    { value: "SEDENTAR", label: "Sedentar" },
-    { value: "MODERAT", label: "Moderat" },
-    { value: "ACTIV", label: "Activ" },
+    {
+        value: "SEDENTAR",
+        label: "Fac mișcare rar",
+    },
+    {
+        value: "MODERAT",
+        label: "Fac mișcare ocazional",
+    },
+    {
+        value: "ACTIV",
+        label: "Fac mișcare des",
+    },
 ];
 
 export const OBJECTIVE_OPTIONS = [
@@ -23,4 +32,26 @@ export const ENVIRONMENT_OPTIONS = [
     { value: "INTERIOR", label: "Interior" },
     { value: "EXTERIOR", label: "Exterior" },
     { value: "AMBELE", label: "Ambele" },
+];
+export const MEDICAL_RESTRICTION_OPTIONS = [
+    {
+        value: "NU",
+        label: "Nu am restricții medicale",
+    },
+    {
+        value: "ASTM",
+        label: "Astm / probleme respiratorii",
+    },
+    {
+        value: "PROBLEME_ARTICULARE",
+        label: "Probleme articulare",
+    },
+    {
+        value: "DURERI_SPATE",
+        label: "Dureri de spate",
+    },
+    {
+        value: "ACCIDENTARI_OSOASE",
+        label: "Accidentări osoase anterioare",
+    },
 ];

@@ -12,6 +12,7 @@ public record RecommendationResponse(
         Integer idChestionar,
         String obiectiv,
         String nivelUtilizator,
+        BigDecimal bugetEstimat,
         Integer idSport,
         String sportRecomandat,
         String mediu,

@@ -17,6 +17,7 @@ SELECT
     c.id_chestionar,
     c.obiectiv,
     c.nivel_utilizator,
+    c.buget_estimat AS buget_estimat,
     s.id_sport,
     s.denumire AS sport_recomandat,
     s.mediu,
